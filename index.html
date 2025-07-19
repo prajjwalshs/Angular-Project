@@ -1,23 +1,341 @@
+<!-- Full Portfolio - Prajjwal Sharma (HTML, CSS, JS with reactive animation) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prajjwal Sharma | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background 0.4s ease-in-out;
+  padding-top: 60px;
+}
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: slideDown 0.8s ease-in-out;
+    }
+    @keyframes slideDown {
+      from { top: -60px; opacity: 0; }
+      to { top: 0; opacity: 1; }
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00bcd4;
+      text-shadow: none;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: rotateZ(-5deg) scale(1.1);
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    
+  &.active {
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      left: 0;
+      bottom: -5px;
+      background-color: #333;
+      transition: width 0.3s;
+    }
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    section {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+      margin-top: 50px;
+      background: #f3f3f3;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    section.in-view {
+      transform: scale(1);
+      opacity: 1;
+    }
+    h1, h2, h3 {
+      color: #000000;
+      text-shadow: none;
+    }
+    p, li {
+      color: #000000;
+      line-height: 1.7;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 28px;
+      background: #444;
+      color: #ffffff;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #000000;
+    }
+  @keyframes bgShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+
+  100% {background-position: 0% 50%;}
+
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+  .nav-links a.active {
+    color: #ffffff;
+    background-color: #007acc;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  h1, h2, h3 {
+    color: #007acc;
+    font-weight: 700;
+  }
+
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #003366;
+    text-decoration: underline;
+  }
+
+  body.dark-theme {
+    background-color: #000;
+    color: #fff;
+  }
+
+  body.dark-theme section {
+    background-color: #111;
+  }
+
+  .theme-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #007acc;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1001;
+}
+</style>
 </head>
-<body>
-    <div class="game-area" id="gameArea">
-        <div class="score-board">
-            <div id="score">Score: 0</div>
-            <div id="highScore">High Score: 0</div>
-        </div>
-        <canvas id="gameCanvas" width="400" height="400"></canvas>
-        <div id="gameOver" class="game-over">
-            <h1>Game Over</h1>
-            <button id="restartButton">Restart</button>
-        </div>
+<body onload="window.scrollTo({ top: 0, behavior: 'instant' })">
+
+  <button class="theme-toggle" style="margin-top: 10px;" onclick="toggleTheme()">Toggle Theme</button>
+<nav>
+    <div class="logo">Prajjwal Sharma</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <h1>Hi, I'm Prajjwal</h1>
+    <p style="text-align:center">Programmer Analyst | Angular & React Developer</p>
+    <div style="text-align:center">
+      <a href="#projects" class="btn">Explore Projects</a>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am a passionate front-end developer with experience in Angular, React, and full-stack development. Currently working at Cognizant as a Programmer Analyst.</p>
+  </section>
+
+  <section id="skills">
+  <h2>Skills</h2>
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" width="50" height="50">
+      <p>React</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="50" height="50">
+      <p>JavaScript</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular" width="50" height="50">
+      <p>Angular</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" width="50" height="50">
+      <p>Java</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" alt="Oracle SQL" width="50" height="50">
+      <p>Oracle SQL</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" width="50" height="50">
+      <p>HTML5</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" width="50" height="50">
+      <p>CSS3</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg" alt="jQuery" width="50" height="50">
+      <p>jQuery</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" width="50" height="50">
+      <p>MySQL</p>
+    </div>
+    <div style="text-align:center;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" width="50" height="50">
+      <p>Linux</p>
+    </div>
+  </div>
+</section>
+
+  <section id="projects">
+  <h2>Projects</h2>
+  <div>
+    <h3>Music Player</h3>
+    <p>Web-based music player with controls and animations. Built with React JS, JavaScript, HTML, CSS.</p>
+    <iframe src="https://prajjwalshs.github.io/Music-Player/" width="100%" height="300" style="border:1px solid #ccc; border-radius:10px; margin-top:10px;"></iframe>
+    <p><a href="https://github.com/prajjwalshs/Music-Player" target="_blank">GitHub</a> | <a href="https://prajjwalshs.github.io/Music-Player/" target="_blank">Live Demo</a></p>
+  </div>
+  <div style="margin-top:40px;">
+    <h3>Snake Game App (Weather App)</h3>
+    <p>Weather dashboard with real-time data using APIs. Built with JavaScript, HTML, and CSS.</p>
+    <iframe src="https://prajjwalshs.github.io/Angular-Project/" width="100%" height="300" style="border:1px solid #ccc; border-radius:10px; margin-top:10px;"></iframe>
+    <p><a href="https://github.com/prajjwalshs/Angular-Project" target="_blank">GitHub</a> | <a href="https://prajjwalshs.github.io/Angular-Project/" target="_blank">Live Demo</a></p>
+  </div>
+</section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div>
+      <h3>Programmer Analyst - Cognizant</h3>
+      <p>Bengaluru, IN | Sept 2023 – Present</p>
+      <ul>
+        <li>Designed interfaces using Angular and React</li>
+        <li>Collaborated with backend teams to build robust apps</li>
+        <li>Focused on seamless UI/UX and code quality</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Programmer Analyst Intern - Cognizant</h3>
+      <p>Chennai, IN | Sept 2023 – Dec 2023</p>
+      <ul>
+        <li>Training in Angular, React, JavaScript, HTML/CSS</li>
+        <li>Built responsive front-end apps</li>
+        <li>Worked on state management and API integration</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:sharmaprajjwal7052@gmail.com">sharmaprajjwal7052@gmail.com</a></p>
+    <p>Phone: +91 7052669629</p>
+    <p>
+      <a href="https://www.linkedin.com/in/prajjwal-sharma-b40b61202" target="_blank">LinkedIn</a> |
+      <a href="https://github.com/prajjwalshs" target="_blank">GitHub</a>
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Prajjwal Sharma. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll("section").forEach(section => {
+      observer.observe(section);
+    });
+    // Smooth scroll with active link styling
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Remove active state from all links
+        document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 40,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+  }
+</script>

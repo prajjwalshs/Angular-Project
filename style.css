@@ -1,62 +1,75 @@
+/* Typing effect for hero */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
+.hero h1 {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: .15em solid #00f2fe;
+  width: 0;
+  animation: typing 3s steps(20, end) forwards, blink .75s step-end infinite;
+}
+
+/* Neon glowing section headers */
+section h2 {
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 0 5px #00f2fe, 0 0 10px #00f2fe, 0 0 20px #00f2fe;
+  margin-bottom: 30px;
+}
+
+/* Animated glow on cards */
+.project, .exp {
+  transition: all 0.3s ease-in-out;
+  border: 1px solid transparent;
+  position: relative;
+}
+.project:hover, .exp:hover {
+  box-shadow: 0 0 20px #00f2fe;
+  transform: scale(1.03);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+/* Scroll fade-in */
+section {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glowing underline for nav links */
+.nav-links a {
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 0;
+  background: #00f2fe;
+  transition: width 0.3s;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Subtle parallax effect */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-}
-
-.game-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.score-board {
-    display: flex;
-    justify-content: space-between;
-    width: 400px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-canvas {
-    background-color: #000;
-    border: 1px solid #333;
-}
-
-.game-over {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.game-over h1 {
-    margin: 0 0 20px 0;
-}
-
-.game-over button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background: #28a745;
-    color: white;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  background-attachment: fixed;
 }
